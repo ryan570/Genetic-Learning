@@ -34,7 +34,7 @@ public class Brain {
     }
 
     public void mutate() {
-        double mutationRate = 0.05;
+        double mutationRate = 0.01;
 
         for (int i = 0; i < instructions.length; i++) {
             float rand = random.nextFloat();
