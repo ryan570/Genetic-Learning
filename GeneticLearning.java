@@ -2,6 +2,10 @@ package genetic_learning;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
@@ -12,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class GeneticLearning extends Application {
 
@@ -38,9 +43,24 @@ public class GeneticLearning extends Application {
         goal = new Point2D(750, 200);
         Circle circle = new Circle(goal.getX(), goal.getY(), 5);
         circle.setFill(Color.BLUE);
-        root.getChildren().addAll(circle, box);
 
-        new Timer().schedule(new FrameUpdate(), 40, 40);
+        Label generationLabel = new Label();
+
+        root.getChildren().addAll(circle, box, generationLabel);
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(40), e -> {
+            if (!pop.allDead()) {
+                pop.update();
+            }
+            else {
+                //pop.setMaxStep(); breaks the algorithm in later generations
+                pop.evolve();
+                pop.mutate();
+            }
+            generationLabel.setText(String.format("Generation: %d", pop.generation));
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 
     public static void main(String[] args) {
