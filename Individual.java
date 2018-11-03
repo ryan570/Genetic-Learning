@@ -13,7 +13,7 @@ public class Individual {
     
     public Individual() {
         fitness = 0;
-        brain = new Brain(100);
+        brain = new Brain(150);
         
         pos = new Point2D(50, 200);
         vel = new Point2D(0, 0);
@@ -63,7 +63,7 @@ public class Individual {
             isDead = true;
         }
         
-        if (brain.currentStep - maxStep > 5) {
+        if (brain.currentStep > maxStep) {
             isDead = true;
         }
         
@@ -81,7 +81,7 @@ public class Individual {
     public float calculateFitness() {
         float distanceToGoal = (float) pos.distance(GeneticLearning.goal);
         if (reachedGoal) {
-            fitness = 1000 * 1/(brain.currentStep);
+            fitness = 100000 * 1/(brain.currentStep * brain.currentStep);
         }
         else {
             fitness = 1 / (distanceToGoal * distanceToGoal);

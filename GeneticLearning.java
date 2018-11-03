@@ -53,7 +53,8 @@ public class GeneticLearning extends Application {
                 pop.update();
             }
             else {
-                //pop.setMaxStep(); breaks the algorithm in later generations
+                pop.setMaxStep(); 
+                
                 pop.evolve();
                 pop.mutate();
             }
