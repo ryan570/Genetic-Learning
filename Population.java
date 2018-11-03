@@ -9,7 +9,7 @@ public class Population {
     public Individual[] individuals;
     public float overallFitness;
     private Random random;
-    public int maxStep = 200;
+    public int maxStep = 150;
     public int generation;
 
     public Population(int size) {
@@ -116,7 +116,7 @@ public class Population {
     public void setMaxStep() {
         Individual victor = findVictor();
         if (victor != null) {
-            if (victor.reachedGoal) {
+            if (victor.reachedGoal && victor.brain.currentStep < maxStep) {
                 maxStep = victor.brain.currentStep;
             }
         }

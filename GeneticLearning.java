@@ -45,10 +45,12 @@ public class GeneticLearning extends Application {
         circle.setFill(Color.BLUE);
 
         Label generationLabel = new Label();
+        Label stepLabel = new Label();
+        stepLabel.setLayoutY(15);
 
-        root.getChildren().addAll(circle, box, generationLabel);
+        root.getChildren().addAll(circle, box, generationLabel, stepLabel);
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(40), e -> {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), e -> {
             if (!pop.allDead()) {
                 pop.update();
             }
@@ -59,6 +61,7 @@ public class GeneticLearning extends Application {
                 pop.mutate();
             }
             generationLabel.setText(String.format("Generation: %d", pop.generation));
+            stepLabel.setText(String.format("Step Count: %d", pop.maxStep));
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
