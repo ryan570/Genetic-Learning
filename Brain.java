@@ -34,14 +34,14 @@ public class Brain {
     }
 
     public void mutate() {
-        double mutationRate = 0.02;
+        double mutationRate = 0.05;
 
         for (int i = 0; i < instructions.length; i++) {
             float rand = random.nextFloat();
             if (rand < mutationRate) {
-                float x = (float) (random.nextFloat() * 3 - 1.5);
-                float y = (float) (random.nextFloat() * 3 - 1.5);
-                instructions[i] = new Point2D(x, y);
+                double x = random.nextDouble() - .5;
+                double y = random.nextDouble() - .5;
+                instructions[i] = instructions[i].add(x, y);
             }
         }
     }
