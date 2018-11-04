@@ -67,7 +67,7 @@ public class GeneticLearning extends Application {
 
         scene.setOnMouseReleased(event -> {
             root.getChildren().remove(selection);
-            root.getChildren().add(new Obstacle(anchor.getX(), anchor.getY(), selection.getWidth(), selection.getHeight()));
+            root.getChildren().add(new Obstacle(selection.getX(), selection.getY(), selection.getWidth(), selection.getHeight()));
             selection.setWidth(0);
             selection.setHeight(0);
         });
@@ -91,4 +91,5 @@ public class GeneticLearning extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 }
