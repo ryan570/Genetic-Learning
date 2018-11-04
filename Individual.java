@@ -1,5 +1,6 @@
 package genetic_learning;
 
+import java.util.ArrayList;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Circle;
 
@@ -59,18 +60,28 @@ public class Individual {
             move();
         }
         
-        if (pos.getX() <= 0 || pos.getX() >= 800 || pos.getY() <= 0 || pos.getY() >= 400) {
-            isDead = true;
-        }
-        
         if (brain.currentStep > maxStep) {
             isDead = true;
         }
         
-        if ((pos.getX() > 385 && pos.getX() < 415) && (pos.getY() > 100 && pos.getY() < 300)) {
-            isDead = true;
+        checkCollisions();
+    }
+    
+    public void checkCollisions() {
+        ArrayList<Obstacle> obstacles = Obstacle.getObstacles();
+        for (Obstacle obstacle : obstacles) {
+            double x = obstacle.getX();
+            double y = obstacle.getY();
+            double width = obstacle.getWidth();
+            double height = obstacle.getHeight();
+            if ((pos.getX() > x && pos.getX() < (x + width)) && (pos.getY() > y && pos.getY() < (y + height))) {
+                isDead = true;
+            }
         }
         
+        if (pos.getX() <= 0 || pos.getX() >= 800 || pos.getY() <= 0 || pos.getY() >= 400) {
+            isDead = true;
+        }
         double distanceToGoal = pos.distance(GeneticLearning.goal);
         if (distanceToGoal < 7.5) {
             reachedGoal = true;
