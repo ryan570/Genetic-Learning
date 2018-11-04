@@ -62,6 +62,7 @@ public class Individual {
         
         if (brain.currentStep > maxStep) {
             isDead = true;
+            return;
         }
         
         checkCollisions();
@@ -76,11 +77,13 @@ public class Individual {
             double height = obstacle.getHeight();
             if ((pos.getX() > x && pos.getX() < (x + width)) && (pos.getY() > y && pos.getY() < (y + height))) {
                 isDead = true;
+                return;
             }
         }
         
         if (pos.getX() <= 0 || pos.getX() >= 800 || pos.getY() <= 0 || pos.getY() >= 400) {
             isDead = true;
+            return;
         }
         double distanceToGoal = pos.distance(GeneticLearning.goal);
         if (distanceToGoal < 7.5) {

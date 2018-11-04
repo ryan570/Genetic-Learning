@@ -1,7 +1,5 @@
 package genetic_learning;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Population {
