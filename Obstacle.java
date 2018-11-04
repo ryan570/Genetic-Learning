@@ -1,16 +1,21 @@
 package genetic_learning;
 
-import javafx.scene.shape.Shape;
+import java.util.ArrayList;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
-public class Obstacle extends Shape {
+public class Obstacle extends Rectangle {
     
-    public Obstacle() {
-        
+    public static ArrayList<Obstacle> obstacles = new ArrayList(100);
+    
+    public Obstacle(double x, double y, double width, double height) {
+        super(x, y, width, height);
+        setFill(Color.RED);
+        setStroke(Color.BLACK);
+        obstacles.add(this);
     }
-
-    @Override
-    public com.sun.javafx.geom.Shape impl_configShape() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    public static ArrayList<Obstacle> getObstacles() {
+        return obstacles;
     }
-
 }
