@@ -15,7 +15,7 @@ public class Individual {
 
     public Individual() {
         fitness = 0;
-        brain = new Brain(150);
+        brain = new Brain(1000);
 
         pos = new Point2D(50, 200);
         vel = new Point2D(0, 0);
@@ -49,6 +49,7 @@ public class Individual {
         }
 
         vel = vel.add(acc);
+
         pos = pos.add(vel);
 
         circle.setCenterX(pos.getX());
@@ -68,6 +69,7 @@ public class Individual {
         checkCollisions();
     }
 
+    //TODO: fix phasing
     public void checkCollisions() {
         ArrayList<Obstacle> obstacles = Obstacle.getObstacles();
         for (Obstacle obstacle : obstacles) {
@@ -96,7 +98,7 @@ public class Individual {
         float distanceToGoal = (float) pos.distance(GeneticLearning.goal);
         if (reachedGoal) {
             float normalized = (GeneticLearning.pop.maxStep - brain.currentStep) / GeneticLearning.pop.maxStep;
-            fitness = (float) Math.exp(-10 * normalized) + 1.0F;
+            fitness = (float) Math.exp(-20 * normalized) + 1.0F;
         } else {
             fitness = 1 / distanceToGoal;
         }

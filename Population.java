@@ -1,5 +1,7 @@
 package genetic_learning;
 
+import javafx.geometry.Point2D;
+
 import java.util.Random;
 
 public class Population {
@@ -82,8 +84,10 @@ public class Population {
         calculateSum();
 
         for (int i = 0; i < newPop.length; i++) {
-            Brain parent = naturalSelection().brain;
-            newPop[i] = parent.clone();
+            Individual parentA = naturalSelection();
+            Individual parentB = naturalSelection();
+
+            newPop[i] = crossover(parentA, parentB).brain;
         }
 
         for (int i = 0; i < individuals.length; i++) {
@@ -91,6 +95,40 @@ public class Population {
         }
         center();
         generation++;
+    }
+
+    public Individual crossover(Individual parentA, Individual parentB) {
+        Individual offspring = new Individual();
+
+        Brain a = parentA.fitness > parentB.fitness ? parentA.brain : parentB.brain;
+        Brain b = parentA.fitness > parentB.fitness ? parentB.brain : parentA.brain;
+
+        double alpha = 0.75, beta = 0.25;
+
+        for (int i = 0; i < a.instructions.length; i++) {
+            double aX = a.instructions[i].getX(), aY = a.instructions[i].getY();
+            double bX = b.instructions[i].getX(), bY = b.instructions[i].getY();
+
+            double x, y;
+
+            double dX = Math.abs(aX - bX);
+            if(aX <= bX) {
+                x = Math.random() * (dX * (alpha + beta + 1.0D)) + aX - alpha * dX;
+            }else {
+                x = Math.random() * (dX * (alpha + beta + 1.0D)) + bX - beta * dX;
+            }
+
+            double dY = Math.abs(aY - bY);
+            if(aY <= bY) {
+                y = Math.random() * (dY * (alpha + beta + 1.0D)) + aY - alpha * dY;
+            }else {
+                y = Math.random() * (dY * (alpha + beta + 1.0D)) + bY - beta * dY;
+            }
+
+            offspring.brain.instructions[i] = new Point2D(x, y);
+        }
+
+        return offspring;
     }
 
     public void mutate() {
