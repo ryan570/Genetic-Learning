@@ -15,7 +15,7 @@ public class Individual {
 
     public Individual() {
         fitness = 0;
-        brain = new Brain(1000);
+        brain = new Brain(150);
 
         pos = new Point2D(50, 200);
         vel = new Point2D(0, 0);
