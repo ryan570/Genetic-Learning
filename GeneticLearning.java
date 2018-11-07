@@ -26,9 +26,10 @@ public class GeneticLearning extends Application {
     public static Point2D goal, start;
     private final Rectangle selection = new Rectangle();
     private final Point anchor = new Point();
-    private Button begin;
+    private Button begin, pause;
     private Label generationLabel, stepLabel;
     private Timeline timeline;
+    private boolean paused;
     
     @Override
     public void start(Stage primaryStage) {
@@ -47,6 +48,25 @@ public class GeneticLearning extends Application {
         begin = new Button("Start Evolution");
         begin.setLayoutX(355);
         begin.setOnAction(this::beginEvolution);
+        
+        pause = new Button("Pause");
+        pause.setLayoutX(370);
+        paused = false;
+        pause.setOnAction(event -> {
+            if (!paused) {
+                timeline.pause();
+                paused = true;
+                pause.setText("Resume");
+                pause.setLayoutX(365);
+            }
+            else {
+                timeline.play();
+                paused = false;
+                pause.setText("Pause");
+                pause.setLayoutX(370);
+            }
+            
+        });
 
         generationLabel = new Label();
         stepLabel = new Label();
@@ -54,7 +74,7 @@ public class GeneticLearning extends Application {
 
         root.getChildren().addAll(selection, begin, goalCircle, startCircle);
 
-        timeline = new Timeline(new KeyFrame(Duration.millis(10), e -> {
+        timeline = new Timeline(new KeyFrame(Duration.millis(50), e -> {
             if (!pop.allDead()) {
                 pop.update();
             } else {
@@ -83,7 +103,7 @@ public class GeneticLearning extends Application {
     }
 
     private void beginEvolution(ActionEvent event) {
-        root.getChildren().addAll(generationLabel, stepLabel);
+        root.getChildren().addAll(pause, generationLabel, stepLabel);
         root.getChildren().remove(begin);
 
         pop.display();
