@@ -125,8 +125,8 @@ public class Population {
                 y = Math.random() * (dY * (alpha + beta + 1.0D)) + bY - beta * dY;
             }
 
-            x = Math.max(-1.0D, Math.min(1.0D, x));
-            y = Math.max(-1.0D, Math.min(1.0D, y));
+            x = Math.max(-1.5D, Math.min(1.5D, x));
+            y = Math.max(-1.5D, Math.min(1.5D, y));
 
             offspring.brain.instructions[i] = new Point2D(x, y);
         }
