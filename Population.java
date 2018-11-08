@@ -7,7 +7,7 @@ import java.util.Random;
 public class Population {
 
     public Individual[] individuals;
-    public float overallFitness;
+    public float overallFitness, maxFitness;
     private Random random;
     public int maxStep = 150;
     public int generation;
@@ -52,9 +52,16 @@ public class Population {
 
     public void calculateSum() {
         overallFitness = 0;
+        maxFitness = Float.MIN_VALUE;
         for (int i = 0; i < individuals.length; i++) {
             overallFitness += individuals[i].fitness;
+            if(individuals[i].fitness > maxFitness)
+                maxFitness = individuals[i].fitness;
         }
+    }
+
+    public double getAverageFitness() {
+        return overallFitness / individuals.length;
     }
 
     public Individual naturalSelection() {

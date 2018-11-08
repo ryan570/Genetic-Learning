@@ -97,8 +97,9 @@ public class Individual {
     public float calculateFitness() {
         float distanceToGoal = (float) pos.distance(GeneticLearning.goal);
         if (reachedGoal) {
-            float normalized = (GeneticLearning.pop.maxStep - brain.currentStep) / GeneticLearning.pop.maxStep;
-            fitness = (float) Math.exp(-20 * normalized) + 1.0F;
+            float normalized = ((float) brain.currentStep) / (float) GeneticLearning.pop.maxStep;
+            normalized = Math.max(0, Math.min(normalized, 1));
+            fitness = (float) Math.exp(-10 * normalized) + 1.0F;
         } else {
             fitness = 1 / distanceToGoal;
         }
