@@ -11,18 +11,14 @@ public class Obstacle extends Rectangle {
 
     public Obstacle(double x, double y, double width, double height) {
         super(x, y, width, height);
-        if (!(height < 5 || width < 5)) {
-            setFill(Color.RED);
-            setStroke(Color.BLACK);
-            obstacles.add(this);
+        setFill(Color.RED);
+        setStroke(Color.BLACK);
+        obstacles.add(this);
 
-            setOnMousePressed(event -> {
-                GeneticLearning.root.getChildren().remove(this);
-                obstacles.remove(this);
-            });
-        } else {
+        setOnMousePressed(event -> {
             GeneticLearning.root.getChildren().remove(this);
-        }
+            obstacles.remove(this);
+        });
     }
 
     public static ArrayList<Obstacle> getObstacles() {

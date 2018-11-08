@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.Light.Point;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -26,7 +28,7 @@ public class GeneticLearning extends Application {
     public static Point2D goal, start;
     private final Rectangle selection = new Rectangle();
     private final Point anchor = new Point();
-    private Button begin, pause;
+    private Button begin, pause, help;
     private Label generationLabel, stepLabel;
     private Timeline timeline;
     private boolean paused;
@@ -48,6 +50,10 @@ public class GeneticLearning extends Application {
         begin = new Button("Start Evolution");
         begin.setLayoutX(355);
         begin.setOnAction(this::beginEvolution);
+        
+        help = new Button("Help?");
+        help.setLayoutX(745);
+        help.setOnAction(this::onHelp);
 
         pause = new Button("Pause");
         pause.setLayoutX(370);
@@ -71,7 +77,7 @@ public class GeneticLearning extends Application {
         stepLabel = new Label();
         stepLabel.setLayoutY(15);
 
-        root.getChildren().addAll(selection, begin, goalCircle, startCircle);
+        root.getChildren().addAll(selection, begin, help, goalCircle, startCircle);
 
         VisualGraph<Double> graph = new VisualGraph(20);
 
@@ -149,6 +155,25 @@ public class GeneticLearning extends Application {
             selection.setWidth(0);
             selection.setHeight(0);
         }
+    }
 
+    private void onHelp(ActionEvent e) {
+        timeline.pause();
+        VBox helpBox = new VBox(10);
+        helpBox.setPadding(new Insets(10));
+        helpBox.setAlignment(Pos.CENTER);
+
+        Label explanation = new Label("This program demonstrates a basic genetic learning algorihm. "
+                + "Individuals in the population move randomly across the screen at first but evolve to move towards the goal. "
+                + "The black dot on the left shows the starting postion and the blue dot on the right show the goal. "
+                + "Click and drag to draw obstacles and click on a drawn obstacle to delete it. "
+                + "The Generation label displays the current generation and the StepCount label displays the current number of steps taken to get to the goal. ");
+        explanation.setWrapText(true);
+        helpBox.getChildren().add(explanation);
+
+        Stage helpStage = new Stage();
+        helpStage.setTitle("Help");
+        helpStage.setScene(new Scene(helpBox, 400, 200));
+        helpStage.show();
     }
 }
