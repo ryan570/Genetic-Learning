@@ -20,7 +20,7 @@ public class GeneticLearning extends Application {
     public static Pane root;
     public static Population pop;
     public static Point2D goal;
-    
+
     @Override
     public void start(Stage primaryStage) {
         root = new Pane();
@@ -72,6 +72,8 @@ public class GeneticLearning extends Application {
             selection.setHeight(0);
         });
 
+        VisualGraph<Double> graph = new VisualGraph(20);
+
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), e -> {
             if (!pop.allDead()) {
                 pop.update();
@@ -80,12 +82,26 @@ public class GeneticLearning extends Application {
 
                 pop.evolve();
                 pop.mutate();
+
+                System.out.println("Average fitness: " + pop.getAverageFitness());
+                graph.insertData((double) pop.getAverageFitness() * 2);
+
+                graph.draw();
             }
             generationLabel.setText(String.format("Generation: %d", pop.generation));
             stepLabel.setText(String.format("Step Count: %d", pop.maxStep));
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+
+        Stage evolutionStage = new Stage();
+        evolutionStage.setTitle("Data");
+        evolutionStage.setResizable(false);
+        evolutionStage.setScene(new Scene(graph, 200, 200));
+        evolutionStage.show();
+
+        evolutionStage.setOnCloseRequest(e -> primaryStage.close());
+        primaryStage.setOnCloseRequest(e -> evolutionStage.close());
     }
 
     public static void main(String[] args) {
