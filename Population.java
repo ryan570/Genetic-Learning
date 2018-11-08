@@ -152,12 +152,26 @@ public class Population {
         return victor;
     }
 
-    public void setMaxStep() {
-        Individual victor = findVictor();
-        if (victor != null) {
-            if (victor.reachedGoal && victor.brain.currentStep < maxStep) {
-                maxStep = victor.brain.currentStep;
+    public boolean noneFinished() {
+        for (Individual individual : individuals) {
+            if (individual.reachedGoal) {
+                return false;
             }
+        }
+        return true;
+    }
+
+    public void setMaxStep() {
+        if (!noneFinished()) {
+            Individual victor = findVictor();
+            if (victor != null) {
+                if (victor.reachedGoal && victor.brain.currentStep < maxStep) {
+                    maxStep = victor.brain.currentStep;
+                }
+            }
+        }
+        else {
+            maxStep = 150;
         }
     }
 }
