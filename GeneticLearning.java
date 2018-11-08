@@ -30,7 +30,7 @@ public class GeneticLearning extends Application {
     private Label generationLabel, stepLabel;
     private Timeline timeline;
     private boolean paused;
-    
+
     @Override
     public void start(Stage primaryStage) {
         root = new Pane();
@@ -48,7 +48,7 @@ public class GeneticLearning extends Application {
         begin = new Button("Start Evolution");
         begin.setLayoutX(355);
         begin.setOnAction(this::beginEvolution);
-        
+
         pause = new Button("Pause");
         pause.setLayoutX(370);
         paused = false;
@@ -58,14 +58,13 @@ public class GeneticLearning extends Application {
                 paused = true;
                 pause.setText("Resume");
                 pause.setLayoutX(365);
-            }
-            else {
+            } else {
                 timeline.play();
                 paused = false;
                 pause.setText("Pause");
                 pause.setLayoutX(370);
             }
-            
+
         });
 
         generationLabel = new Label();
@@ -145,8 +144,11 @@ public class GeneticLearning extends Application {
 
     private void onRelease(MouseEvent event) {
         selection.setStroke(null);
-        root.getChildren().add(new Obstacle(selection.getX(), selection.getY(), selection.getWidth(), selection.getHeight()));
-        selection.setWidth(0);
-        selection.setHeight(0);
+        if (selection.getWidth() > 25) {
+            root.getChildren().add(new Obstacle(selection.getX(), selection.getY(), selection.getWidth(), selection.getHeight()));
+            selection.setWidth(0);
+            selection.setHeight(0);
+        }
+
     }
 }
