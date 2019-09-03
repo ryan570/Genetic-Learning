@@ -2,6 +2,6 @@
 
 A basic genetic learning algorithm. 
 
-![alt text](https://i.imgur.com/U4IYVvb.gifv)
+![](https://i.imgur.com/U4IYVvb.gif)
 
 ![alt text](https://i.imgur.com/P8O8Ktj.png)
